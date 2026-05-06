@@ -1,5 +1,5 @@
 """
-    Represents a single stock position with symbol, shares, and average cost.
+    Contains Position and Portfolio classes for tracking stock investments.
 """
 
 from decimal import Decimal

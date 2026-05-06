@@ -1,7 +1,6 @@
 """
-Command-line interface for the bank management system.
-Handles user interaction for account creation, transactions,
-and portfolio tracking.
+Main module for the bank management system. Contains the main CLI loop and user interaction logic.
+Handles account creation, deposits, withdrawals, transfers, and portfolio management.
 """
 
 from bank import Bank

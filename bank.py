@@ -1,6 +1,5 @@
 """
 Base class representing a bank/repository.
-Manages all bank accounts and portfolios, handles persistence through the database.
 """
 
 from exceptions import InsufficientFundsError
@@ -12,10 +11,8 @@ from portfolio import Portfolio
 
 class Bank:
     """
-    Base class representing a bank/repository.
     Manages all bank accounts and portfolios, handles persistence through the database.
     """
-
     def __init__(self):
         self._accounts = {}
         self._portfolios = {}
