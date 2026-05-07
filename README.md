@@ -47,3 +47,9 @@ pip install yfinance
 - The `bank.db` file is created automatically on first run
 - Account IDs are UUIDs — copy and paste them when prompted
 - Stock prices require an internet connection
+
+  ## Author
+Mathias Bogarin
+
+## Course
+CIS 131 — Introduction to Programming
