@@ -17,6 +17,16 @@ class Account:
         self._balance = Decimal(balance)
         self._transaction_history = []
 
+    @property
+    def owner(self):
+        """Returns the account owner's name."""
+        return self._owner
+
+    @property
+    def balance(self):
+        """Returns the current account balance."""
+        return self._balance
+
     def deposit(self, amount):
         """
         Deposits amount into the account balance
