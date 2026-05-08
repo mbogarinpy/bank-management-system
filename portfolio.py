@@ -18,14 +18,17 @@ class Position:
 
     @property
     def symbol(self):
+        """Returns the symbol name"""
         return self._symbol
 
     @property
     def shares(self):
+        """Returns the quantity of shares"""
         return self._shares
 
     @property
     def avg_cost(self):
+        "Returns average cost per share"
         return self._avr_cost
 
     def share_cost(self):
@@ -54,16 +57,9 @@ class Portfolio:
 
     @property
     def owner(self):
+        """Returns the account owner's name."""
         return self._owner
-    
-    @property
-    def data_base(self):
-        return self._data_base
-    
-    @property
-    def acount_id(self):
-        return self._account_id
-    
+
     def add_position(self, symbol, shares, avg_cost, save=True):
         """Alows to add a new position."""
 

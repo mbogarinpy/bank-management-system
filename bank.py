@@ -30,10 +30,10 @@ class Bank:
                     acc[3], acc[1], acc[2], acc[5], save=False, account_id=acc[0]
                 )
 
-        for portfolio in self._portfolios:
-            row = self._data_base.load_positions(str(portfolio))
+        for portfolio_id, portfolio_obj in self._portfolios.items():
+            row = self._data_base.load_positions(str(portfolio_id))
             for r in row:
-                self._portfolios[portfolio].add_position(r[1], r[2], r[3], save=False)
+                portfolio_obj.add_position(r[1], r[2], r[3], save=False)
 
     def create_account(
         self, account_type, owner, balance, extra_param, save=True, account_id=None
