@@ -35,6 +35,15 @@ class Database:
             account_id TEXT,
             description TEXT     
 )""")
+
+        self._connection.execute("""CREATE TABLE IF NOT EXISTS positions (
+            account_id TEXT,
+            symbol TEXT,
+            shares TEXT,
+            avg_cost TEXT,
+            PRIMARY KEY (account_id, symbol)
+)""")
+
         self._connection.commit()
 
     def save_account(self, account_id, account):
@@ -84,3 +93,34 @@ class Database:
             (str(new_balance), str(account_id)),
         )
         self._connection.commit()
+
+    def save_position(self, account_id, symbol, shares, avg_cost):
+        """
+        Keeps track of the portfolio positions
+        """
+        self._connection.execute(
+            """
+            INSERT INTO positions VALUES(?, ?, ?, ?)
+
+""",
+            (str(account_id), symbol, shares, avg_cost),
+        )
+
+        self._connection.commit()
+
+    def load_positions(self, account_id):
+        """
+        Retrieves all positions records from the database
+        and returns them.
+        """
+
+        result = self._connection.execute(
+            """
+            SELECT * FROM positions
+            WHERE account_id = ?                         
+""",
+            (str(account_id),),
+        )
+
+        positions = result.fetchall()
+        return positions
