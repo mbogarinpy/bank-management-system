@@ -13,6 +13,7 @@ class Bank:
     """
     Manages all bank accounts and portfolios, handles persistence through the database.
     """
+
     def __init__(self):
         self._accounts = {}
         self._portfolios = {}
@@ -102,18 +103,17 @@ class Bank:
         Allows transfers between two accounts.
         Raises InsufficientFundsError if the source account has insufficient funds.
         """
+
+        from_account = None
         try:
             from_account = self.get_account(from_id)
             from_account.withdraw(amount)
-        except (KeyError, InsufficientFundsError) as exc:
-            raise InsufficientFundsError("Transfer incomplete") from exc
-
-        try:
             to_account = self.get_account(to_id)
             to_account.deposit(amount)
-        except KeyError as exc:
-            from_account.deposit(amount)
-            raise KeyError("Transfer incomplete") from exc
+        except (KeyError, InsufficientFundsError) as exc:
+            if from_account is not None:
+                from_account.deposit(amount)
+            raise exc
 
     def list_accounts(self):
         """Prints a summary of all accounts in the bank."""
