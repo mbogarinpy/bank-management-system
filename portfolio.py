@@ -28,7 +28,7 @@ class Position:
 
     @property
     def avg_cost(self):
-        "Returns average cost per share"
+        """Returns average cost per share"""
         return self._avr_cost
 
     def share_cost(self):
@@ -61,7 +61,7 @@ class Portfolio:
         return self._owner
 
     def add_position(self, symbol, shares, avg_cost, save=True):
-        """Alows to add a new position."""
+        """Allows to add a new position."""
 
         new_stock = Position(symbol, shares, avg_cost)
         self._positions[symbol] = new_stock
@@ -100,9 +100,12 @@ class Portfolio:
         Returns a dictionary of symbol to current price.
         """
 
-        price = {}
-        for position in self._positions:
-            ticker = yf.Ticker(position)
-            price[position] = Decimal(str(ticker.info["currentPrice"]))
+        try:
+            price = {}
+            for position in self._positions:
+                ticker = yf.Ticker(position)
+                price[position] = Decimal(str(ticker.info["currentPrice"]))
 
-        return price
+            return price
+        except KeyError as exc:
+            raise KeyError(f"Invalid ticker symbol: {position}") from exc
