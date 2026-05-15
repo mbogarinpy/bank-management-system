@@ -109,15 +109,19 @@ class Bank:
         Raises InsufficientFundsError if the source account has insufficient funds.
         """
 
-        from_account = None
+        withdrawal_successful = False
         try:
             from_account = self.get_account(from_id)
             from_account.withdraw(amount)
+            self._data_base.update(from_id, from_account.balance)
+            withdrawal_successful = True
             to_account = self.get_account(to_id)
             to_account.deposit(amount)
+            self._data_base.update(to_id, to_account.balance)
         except (KeyError, InsufficientFundsError) as exc:
-            if from_account is not None:
+            if withdrawal_successful:
                 from_account.deposit(amount)
+                self._data_base.update(from_id, from_account.balance)
             raise exc
 
     def list_accounts(self):
