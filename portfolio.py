@@ -64,11 +64,16 @@ class Portfolio:
         """Allows to add a new position."""
 
         if symbol in self._positions:
-                new_avg_cost = (self._positions[symbol].shares * self._positions[symbol].avg_cost + shares * avg_cost) / (self._positions[symbol].shares + shares)
-                total_shares = self._positions[symbol].shares + shares
-                self._positions[symbol] = Position(symbol, total_shares, new_avg_cost)
-                if save:
-                    self._data_base.update_positions(self._account_id, symbol, total_shares, new_avg_cost)
+            existing = self._positions[symbol]
+            new_avg_cost = (
+                existing.shares * existing.avg_cost + shares * avg_cost
+                ) / (existing.shares + shares)
+            total_shares = existing.shares + shares
+            existing = Position(symbol, total_shares, new_avg_cost)
+            if save:
+                self._data_base.update_positions(
+                self._account_id, symbol, total_shares, new_avg_cost
+                )
         else:
             new_stock = Position(symbol, shares, avg_cost)
             self._positions[symbol] = new_stock
