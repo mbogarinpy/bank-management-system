@@ -124,3 +124,18 @@ class Database:
 
         positions = result.fetchall()
         return positions
+
+    def update_positions(self, account_id, symbol, shares, avg_cost):
+        """
+        Updates the positions of an existing
+        account in the database.
+        """
+
+        self._connection.execute(
+            """
+                                UPDATE positions SET shares = ?,  avg_cost = ? 
+                                WHERE account_id = ? AND symbol = ?
+                                """,
+            (str(shares), str(avg_cost), str(account_id), str(symbol)),
+        )
+        self._connection.commit()

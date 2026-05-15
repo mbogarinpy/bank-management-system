@@ -63,10 +63,17 @@ class Portfolio:
     def add_position(self, symbol, shares, avg_cost, save=True):
         """Allows to add a new position."""
 
-        new_stock = Position(symbol, shares, avg_cost)
-        self._positions[symbol] = new_stock
-        if save is True:
-            self._data_base.save_position(self._account_id, symbol, shares, avg_cost)
+        if symbol in self._positions:
+                new_avg_cost = (self._positions[symbol].shares * self._positions[symbol].avg_cost + shares * avg_cost) / (self._positions[symbol].shares + shares)
+                total_shares = self._positions[symbol].shares + shares
+                self._positions[symbol] = Position(symbol, total_shares, new_avg_cost)
+                if save:
+                    self._data_base.update_positions(self._account_id, symbol, total_shares, new_avg_cost)
+        else:
+            new_stock = Position(symbol, shares, avg_cost)
+            self._positions[symbol] = new_stock
+            if save:
+                self._data_base.save_position(self._account_id, symbol, shares, avg_cost)
 
     def get_position(self):
         """Prints all current positions in the portfolio."""
