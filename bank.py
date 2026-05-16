@@ -36,7 +36,7 @@ class Bank:
                 portfolio_obj.add_position(r[1], r[2], r[3], save=False)
 
     def create_account(
-        self, account_type, owner, balance, extra_param, save=True, account_id=None
+        self, account_type, owner, balance, rate_or_limit, save=True, account_id=None
     ):
         """
         Creates a new SavingsAccount or CheckingAccount with a linked portfolio.
@@ -50,10 +50,10 @@ class Bank:
             new_user_id = uuid.UUID(account_id)
 
         if account_type == "SavingsAccount":
-            self._accounts[new_user_id] = SavingsAccount(owner, balance, extra_param)
+            self._accounts[new_user_id] = SavingsAccount(owner, balance, rate_or_limit)
 
         elif account_type == "CheckingAccount":
-            self._accounts[new_user_id] = CheckingAccount(owner, balance, extra_param)
+            self._accounts[new_user_id] = CheckingAccount(owner, balance, rate_or_limit)
 
         else:
             raise ValueError('"savings" or "checking" only accepted')
