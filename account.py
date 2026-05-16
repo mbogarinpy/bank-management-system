@@ -45,7 +45,9 @@ class Account:
         Raises InsufficientFundsError if amount exceeds balance.
         """
         amount = Decimal(str(amount))
-        if amount > self._balance:
+        if amount <= 0:
+            raise ValueError("Amount must be greater than 0")
+        elif amount > self._balance:
             raise InsufficientFundsError(amount)
         else:
             self._balance -= amount
@@ -90,8 +92,10 @@ class CheckingAccount(Account):
         """Withdraws amount allowing balance to go negative up to the overdraft limit."""
 
         amount = Decimal(str(amount))
+        if amount <= 0:
+            raise ValueError("Amount must be greater than 0")
 
-        if amount > (self._balance + self._overdraft_limit):
+        elif amount > (self._balance + self._overdraft_limit):
             raise InsufficientFundsError(amount)
         else:
             self._balance -= amount
