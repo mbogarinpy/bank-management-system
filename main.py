@@ -4,7 +4,7 @@ Handles account creation, deposits, withdrawals, transfers, and portfolio manage
 """
 
 from bank import Bank
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from exceptions import InsufficientFundsError
 
 
@@ -136,6 +136,8 @@ def main():
             print(e)
         except InsufficientFundsError as e:
             print(e)
+        except InvalidOperation as e:
+            print("Invalid input for amount. Please enter a valid number.")
 
 
 if __name__ == "__main__":
