@@ -135,7 +135,7 @@ class Bank:
         and updates the balance in the database.
         """
 
-        account = self._accounts.get(uuid.UUID(account_id))
+        account = self.get_account(account_id)
         account.deposit(amount)
         self._data_base.update(account_id, account.balance)
 
@@ -145,6 +145,6 @@ class Bank:
         and updates the balance in the database.
         """
 
-        account = self._accounts.get(uuid.UUID(account_id))
+        account = self.get_account(account_id)
         account.withdraw(amount)
         self._data_base.update(account_id, account.balance)
