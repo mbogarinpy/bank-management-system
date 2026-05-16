@@ -136,7 +136,7 @@ def main():
             print(e)
         except InsufficientFundsError as e:
             print(e)
-        except InvalidOperation as e:
+        except InvalidOperation:
             print("Invalid input for amount. Please enter a valid number.")
 
 
