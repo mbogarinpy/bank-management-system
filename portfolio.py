@@ -13,8 +13,8 @@ class Position:
 
     def __init__(self, symbol, shares, avg_cost):
         self._symbol = symbol
-        self._shares = shares
-        self._avr_cost = Decimal(str(avg_cost))
+        self._shares = int(shares)
+        self._avg_cost = Decimal(str(avg_cost))
 
     @property
     def symbol(self):
@@ -29,18 +29,18 @@ class Position:
     @property
     def avg_cost(self):
         """Returns average cost per share"""
-        return self._avr_cost
+        return self._avg_cost
 
     def share_cost(self):
         """Calculates the cost of the position."""
-        return self._shares * self._avr_cost
+        return self._shares * self._avg_cost
 
     def gain_loss(self, current_price):
         """Calculates the unrealized gain or loss for this position given the current price."""
-        return (current_price - self._avr_cost) * self._shares
+        return (current_price - self._avg_cost) * self._shares
 
     def __str__(self):
-        return f"Ticker: {self._symbol} Shares: {self._shares}  Cost: {self._avr_cost}"
+        return f"Ticker: {self._symbol} Shares: {self._shares}  Cost: {self._avg_cost}"
 
 
 class Portfolio:
@@ -69,7 +69,7 @@ class Portfolio:
                 existing.shares * existing.avg_cost + shares * avg_cost
                 ) / (existing.shares + shares)
             total_shares = existing.shares + shares
-            existing = Position(symbol, total_shares, new_avg_cost)
+            self._positions[symbol] = Position(symbol, total_shares, new_avg_cost)
             if save:
                 self._data_base.update_positions(
                 self._account_id, symbol, total_shares, new_avg_cost
